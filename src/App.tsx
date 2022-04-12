@@ -12,17 +12,25 @@ function App() {
   const [todos, setTodos] = useState([] as todo[]);
 
   const add = (todo: todo) => {
-    setTodos([...todos, todo]);
+    setTodos((todos) => [...todos, todo]);
   };
 
-  const finish = (idx: number) => {
+  const toggle = (idx: number) => {
     const todo = todos[idx];
     todo.status = todo.status === "1" ? "0" : "1";
-    setTodos([...todos.slice(0, idx), todo, ...todos.slice(idx + 1)]);
+    setTodos((todos) => [
+      ...todos.slice(0, idx),
+      todo,
+      ...todos.slice(idx + 1),
+    ]);
   };
 
   const del = (idx: number) => {
-    setTodos([...todos.slice(0, idx), ...todos.slice(idx + 1)]);
+    setTodos((todos) => {
+      const newTodos = [...todos];
+      newTodos.splice(idx, 1);
+      return newTodos;
+    });
   };
 
   return (
@@ -30,7 +38,7 @@ function App() {
       <div className="mt-20">
         <Header />
         <Input add={add} />
-        <Items todos={todos} finish={finish} del={del} />
+        <Items todos={todos} toggle={toggle} del={del} />
       </div>
     </>
   );

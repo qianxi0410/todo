@@ -7,20 +7,19 @@ interface todo {
 
 type Props = {
   todos: todo[];
-  finish: (idx: number) => void;
+  toggle: (idx: number) => void;
   del: (idx: number) => void;
 };
 
-const Items: React.FunctionComponent<Props> = ({ todos, finish, del }) => {
+const Items: React.FunctionComponent<Props> = ({ todos, toggle, del }) => {
   const lis = todos.map((item, index) => {
     return (
       <li
-        key={index}
+        key={item.desc}
         className="border-2 transition-shadow grid grid-cols-8 px-1 rounded-md my-1 hover:shadow-2xl leading-10">
         <div className="col-start-1 col-span-7 ml-2">
           <input
-            key={item.desc}
-            onClick={() => finish(index)}
+            onClick={() => toggle(index)}
             type="checkbox"
             className="rounded mr-3"
           />
